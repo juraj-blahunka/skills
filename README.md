@@ -3,11 +3,15 @@
 Personal agent skills.
 
 Each skill lives in its own directory with a `SKILL.md`.
-They are installed into Claude Code by symlinking each directory into `~/.claude/skills`:
+Install them into Claude Code with:
 
 ```sh
-ln -s "$PWD/<skill>" ~/.claude/skills/<skill>
+./install.sh
 ```
+
+It removes every symlink in `~/.claude/skills` that points into this repo, then symlinks each skill directory there.
+Re-run it after adding, renaming or deleting a skill.
+Set `CLAUDE_SKILLS_DIR` to install somewhere else.
 
 | Skill | Purpose |
 |---|---|
