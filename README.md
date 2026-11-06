@@ -18,4 +18,5 @@ Set `CLAUDE_SKILLS_DIR` to install somewhere else.
 | `commit` | Commit only the current session's changes, leaving other uncommitted work untouched |
 | `gpt-review` | Independent GPT code review, returned verbatim |
 | `herdr` | Work inside Herdr through `hc` and `herdr-app` |
+| `verify` | Verify a change end to end through a Haiku agent, using the repo's own recipe |
 | `swift-code-review` | Staff-engineer adversarial review of non-UI Swift business logic |
