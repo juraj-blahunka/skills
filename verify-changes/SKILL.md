@@ -1,6 +1,7 @@
 ---
-name: verify
-description: Verify a change end to end in any repo - build, lint, tests, then exercising it the way a user would (simulator, browser, CLI in a throwaway home) with screenshots checked closely and cleanup guaranteed. Runs the ladder in a background Haiku agent through Herdr, using the repo's own "## Verify" recipe, and drafts that recipe when the repo has none. Use when asked to verify, check, prove or confirm a change works, or before calling work done.
+name: verify-changes
+description: Verify a change end to end in any repo - build, lint, tests, then exercising it the way a user would (simulator, browser, CLI in a throwaway home) with screenshots checked closely and cleanup guaranteed. Runs the ladder in a background Haiku agent through Herdr, using the repo's own "## Verify" recipe, and drafts that recipe when the repo has none. Runs only when invoked by name as /verify-changes.
+disable-model-invocation: true
 argument-hint: "[what to verify: a change, a feature, a commit range; default: this session's changes]"
 allowed-tools: Bash, Read, Write, Edit, Grep, Glob, AskUserQuestion
 ---
@@ -44,7 +45,7 @@ Use this format, one line per rung, `none` where a rung does not apply:
 ```markdown
 ## Verify
 
-How agents verify a change end to end; the `verify` skill runs it rung by rung and stops at the first failure.
+How agents verify a change end to end; the `verify-changes` skill runs it rung by rung and stops at the first failure.
 
 - Build: `<command>`
 - Lint: `<command>` | none

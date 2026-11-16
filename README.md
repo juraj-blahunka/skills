@@ -18,5 +18,5 @@ Set `CLAUDE_SKILLS_DIR` to install somewhere else.
 | `gpt-review` | Independent GPT code review, returned verbatim |
 | `herdr` | Work inside Herdr through `hc` and `herdr-app` |
 | `promote-skill` | Move a project-local skill here, stripped of personal and project-specific details |
-| `verify` | Verify a change end to end through a Haiku agent, using the repo's own recipe |
+| `verify-changes` | Verify a change end to end through a Haiku agent, using the repo's own recipe |
 | `swift-code-review` | Staff-engineer adversarial review of non-UI Swift business logic |
