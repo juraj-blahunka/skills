@@ -89,7 +89,6 @@ For each finding, pick one:
 1. **Generalize**: replace the specific with how to discover it in any repo.
    "Run `xcodebuild -scheme Acme`" becomes "find the scheme with `xcodebuild -list`".
 2. **Externalize**: when the project-specific part is the valuable part (a build recipe, a list of services), make the skill read it from the repo's `AGENTS.md`, or `CLAUDE.md` if there is no `AGENTS.md`, under a `## <Skill name>` section, and move the specifics into that section in the project.
-   The `verify-changes` skill and its `## Verify` recipe follow this pattern.
 3. **Remove**: when it only served this project and generalizing adds nothing.
 4. **Keep**: only when it is genuinely universal, such as a public tool's name.
 
