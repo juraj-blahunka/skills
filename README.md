@@ -15,6 +15,7 @@ Set `CLAUDE_SKILLS_DIR` to install somewhere else.
 
 | Skill | Purpose |
 |---|---|
+| `create-image` | Generate or edit an image through OpenRouter, FLUX 3 Klein at about 2 MP by default |
 | `gpt-review` | Independent GPT code review, returned verbatim |
 | `herdr` | Work inside Herdr through `hc` and `herdr-app` |
 | `promote-skill` | Move a project-local skill here, stripped of personal and project-specific details |
