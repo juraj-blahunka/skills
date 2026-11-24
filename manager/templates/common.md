@@ -38,7 +38,7 @@ Report to it with `hc send {{MANAGER}} "<message>"`.
    The report lists: commits, what was built, tests run and results, proof paths, decisions you made, open questions, and what slowed you down.
 7. Stay idle afterwards: the manager may send review findings.
    Reproduce each finding first; one that does not reproduce gets no code.
-   Once the fixes are in, review only the fixes: `/code-review <level> <head-the-findings-were-about>..HEAD`, logged in the self-review file like the first review.
+   Once the fixes are in, review only the fixes: `/code-review low <head-the-findings-were-about>..HEAD`, logged in the self-review file like the first review.
 
 If a decision is genuinely {{USER}}'s, pick the option most aligned with VISION.md, list it under "Open questions" in your report, and continue.
 If stuck, `hc send {{MANAGER}} "STUCK <id>: <blocker>"`.

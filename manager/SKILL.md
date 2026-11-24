@@ -40,7 +40,7 @@ Load the `herdr` skill first and follow its ground rules.
 4. **Reviews.** Fresh agents find the bugs, the author fixes them, and a second model catches what one model misses.
    - **Self-review, in the dev agent's session (common.md step 5):** `/code-review <level> <base>...HEAD` once the last chunk passes.
      Its finders run as fresh subagents that see only the diff, so the finding already has fresh context; only the judging and fixing happen in the author's session.
-     The level goes in the brief: `high` by default, `max` on large or risky items (stored formats and migrations, feature flags and build detection, launch, focus and navigation, concurrency, anything over about 200 changed lines of code, or anything the user calls risky).
+     The level goes in the brief: `medium` by default, `high` on large or risky items (stored formats and migrations, feature flags and build detection, launch, focus and navigation, concurrency, anything over about 200 changed lines of code, or anything the user calls risky).
      No `--fix`: the agent logs every finding first, then reproduces each one and fixes the real ones.
    - **GPT, on every code item:** start it as soon as the agent sends `COMMITTED`, in parallel with its remaining tests, never after them.
      `MANAGER_DIR=$S ~/.claude/skills/manager/scripts/review.sh <id> "<title>" <base> <head> "<intended behavior>" [worktree]`.
@@ -48,7 +48,7 @@ Load the `herdr` skill first and follow its ground rules.
      Collect its answer with `python3 ~/.claude/skills/gpt-review/scripts/codex-session.py gpt-<id>`, never from `hc read`.
      GPT medium sometimes returns "no findings" on big diffs; on those, run it again at `GPT_EFFORT=high`.
    - **Never review the same code twice.** Each review records the head it covered; a later review covers only what changed since (`<reviewed-sha>..HEAD`).
-     Fixes from either layer get one review of the fixes alone, never a new review of the whole branch.
+     Fixes from either layer get one review of the fixes alone, at `low`, never a new review of the whole branch.
    - Research and artifact items get no reviews unless the user asks.
 5. **Triage.** Merge GPT's list and the agent's self-review log (`$S/<id>-selfreview.md`) into `$S/issues.md`.
    The author judged its own findings, so audit that judgment: every finding marked "did not reproduce" or "not a bug" needs evidence (the command or test that showed it); one without gets sent back.
