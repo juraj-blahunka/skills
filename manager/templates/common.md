@@ -57,7 +57,7 @@ Do not start other agents unless your brief says so.
 
 You run in auto mode.
 - A rejected command: do not retry it verbatim; use a simpler, conventional form and mention the rejection in your report.
-- Removals use literal paths or `"${VAR:?}"`; a bare `$VAR/*` triggers a safety prompt that blocks you.
+- Removals use literal paths only; even `"${VAR:?}"` on a variable built from another variable (`O=$S/$r`) triggers a safety prompt that blocks the agent. In loops, write the literal paths or `cd` into the parent and remove a literal name.
 - Write scripts with the Write tool, not heredocs (a heredoc with `$$` triggers a safety prompt).
 - Keep scratch files in your scratchpad, not `/tmp`.
 
