@@ -20,6 +20,7 @@ Set `CLAUDE_SKILLS_DIR` to install somewhere else.
 | `gpt-review` | Independent GPT code review, returned verbatim |
 | `herdr` | Work inside Herdr through `hc` and `herdr-app` |
 | `manager` | Run a queue of work through Herdr agents: plan, build, two reviews, fixes, merge; manual only (`/manager`) |
+| `search-console` | Google Search Console: search traffic, URL inspection and sitemaps, for SEO and indexing debugging |
 | `promote-skill` | Move a project-local skill here, stripped of personal and project-specific details |
 | `verify-changes` | Verify a change end to end through a Haiku agent, using the repo's own recipe |
 | `swift-code-review` | Staff-engineer adversarial review of non-UI Swift business logic |
