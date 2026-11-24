@@ -22,11 +22,13 @@ Report to it with `hc send {{MANAGER}} "<message>"`.
    - Your plan lists the commits you intend, one per logical step (for example: model and its tests, then the component, then the screen wiring, then docs).
    - Each commit is one coherent change that builds and passes its tests, with a message that says what it does and why.
    - Commit each chunk as soon as it passes; never hold work uncommitted to the end, and never squash planned steps into one big commit.
-   - Review fixes are commits too: one per finding or per group of related findings.
+   - Commits are logical chunks sized to the change, never one per small change: a review fix or fix-up to a chunk that is not merged yet is folded into that chunk's commit; a new commit only for a genuinely new logical step.
+   - After your first code commit, send `hc send {{MANAGER}} "COMMITTED <id>: <sha>"` so the independent review starts while you keep testing.
    Conventional commit prefixes; end every message with:
 {{TRAILERS}}
 4. Test (see below), then record the proof.
-5. Before DONE: a fresh build of the tests at the committed HEAD, and a release-configuration build.
+5. Self-review before DONE: run `/code-review high --fix` on your branch's diff against its base, reproduce each finding before fixing it, and fold the fixes into the commits they belong to.
+   Then a fresh build of the tests at the committed HEAD, and a release-configuration build.
 6. Report with `hc send {{MANAGER}} "DONE <id>: report at <path>"`.
    The report lists: commits, what was built, tests run and results, proof paths, decisions you made, open questions, and what slowed you down.
 7. Stay idle afterwards: the manager may send review findings.

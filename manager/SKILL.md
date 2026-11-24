@@ -37,12 +37,14 @@ Load the `herdr` skill first and follow its ground rules.
    Reply with "go" or corrections.
 3. **Build.** The agent implements, tests and records proof, committing each logical chunk as soon as it passes, so the user can watch the work land in `git log`.
    Check its `git log` on every wake-up: a chunk that grew into one big uncommitted change gets a nudge to commit, and about 45 minutes with nothing committed always does.
-4. **Reviews.** As soon as the code is committed, start both reviews in parallel with the agent's remaining tests, never after them:
-   `MANAGER_DIR=$S ~/.claude/skills/manager/scripts/review.sh <id> "<title>" <base> <head> "<intended behavior>" [worktree]`
-   - A fresh Opus agent writes findings to `$S/<id>-review-opus.md`.
+4. **Reviews.** Three layers, so findings arrive early without losing an independent eye:
+   - **Self-review:** the dev agent runs `/code-review high --fix` on its own diff before DONE (common.md step 5); it needs no round trip through you.
+   - **GPT, on every code item:** a different model catches what the author's own review misses. Start it as soon as the agent sends `COMMITTED`, in parallel with its remaining tests, never after them.
+   - **Fresh Opus, only on large or risky items:** stored formats and migrations, feature flags and build detection, launch, focus and navigation, concurrency, anything over about 200 changed lines of code, or anything the user calls risky. Skip it for small fixes, docs and copy.
+   `MANAGER_DIR=$S ~/.claude/skills/manager/scripts/review.sh <id> "<title>" <base> <head> "<intended behavior>" [worktree]` starts both; `OPUS=0` starts GPT only.
    - GPT runs as the `gpt-review` skill describes (GPT-6-Luna, read-only Codex), medium effort, `GPT_EFFORT=high` for large diffs.
      Collect its answer with `python3 ~/.claude/skills/gpt-review/scripts/codex-session.py gpt-<id>`, never from `hc read`.
-   - GPT medium sometimes returns "no findings" on big diffs; Opus is the reviewer that must not be skipped.
+   - GPT medium sometimes returns "no findings" on big diffs; on those, Opus must not be skipped.
    - Research and artifact items get no reviews unless the user asks.
 5. **Triage.** Merge both lists into `$S/issues.md`.
    Send the dev agent the real majors and minors, ordered by severity times likelihood, with the rule "reproduce each one first; a finding that does not reproduce gets no code".

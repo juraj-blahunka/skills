@@ -5,6 +5,7 @@
 #
 # Needs: MANAGER_DIR (the manager's scratchpad), HC_TERMINAL_ID (the manager's hc address).
 # GPT_EFFORT overrides the GPT reasoning effort (default medium; high for large diffs).
+# OPUS=0 skips the Opus review (small, low-risk items): GPT only.
 #
 # Writes $MANAGER_DIR/<id>-brief-opus.md and <id>-brief-gpt.md.
 # Opus writes its findings to $MANAGER_DIR/<id>-review-opus.md and reports with hc send.
@@ -41,9 +42,13 @@ for f in "$opus_brief" "$gpt_brief"; do
 	[ -s "$f" ] || { echo "empty brief $f" >&2; exit 1; }
 done
 
-hc run --bg --json --name "review-$id" --cwd "$repo" claude --permission-mode auto --model opus \
-	"Read and follow $opus_brief. You may write only the findings file it names. Report with hc send $me \"DONE $id opus review\" when done." >/dev/null
-echo "opus: review-$id"
+if [ "${OPUS:-1}" != 0 ]; then
+	hc run --bg --json --name "review-$id" --cwd "$repo" claude --permission-mode auto --model opus \
+		"Read and follow $opus_brief. You may write only the findings file it names. Report with hc send $me \"DONE $id opus review\" when done." >/dev/null
+	echo "opus: review-$id"
+else
+	echo "opus: skipped (OPUS=0)"
+fi
 
 supported=$(codex debug models | python3 -I -c 'import json,sys; m=next((m for m in json.load(sys.stdin)["models"] if m["slug"]=="gpt-6-luna"),None); print(" ".join(e["effort"] for e in m["supported_reasoning_levels"]) if m else "")')
 case " $supported " in
