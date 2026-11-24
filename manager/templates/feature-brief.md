@@ -4,7 +4,9 @@ First read the ground rules: <$S>/common.md
 
 Plan file: <$S>/<id>-plan.md
 Report file: <$S>/<id>-report.md
+Self-review file: <$S>/<id>-selfreview.md
 Worktree: <path> (branch wip/<id>), or "main".
+Review: `/code-review <high, or max for a large or risky item> <base>...HEAD`, base <the commit of main this branch starts from>.
 
 ## What {{USER}} asked
 

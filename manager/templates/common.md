@@ -27,12 +27,17 @@ Report to it with `hc send {{MANAGER}} "<message>"`.
    Conventional commit prefixes; end every message with:
 {{TRAILERS}}
 4. Test (see below), then record the proof.
-5. Self-review before DONE: run `/code-review high --fix` on your branch's diff against its base, reproduce each finding before fixing it, and fold the fixes into the commits they belong to.
+5. Self-review before DONE, once your last chunk is committed and passes: `/code-review <level> <base>...HEAD`, with the level and base from your brief, and no `--fix`.
+   - First write every finding to the self-review file in your brief, with the head it reviewed (`git rev-parse HEAD`), before you change any code.
+   - Then reproduce each one. Mark it `fixed`, `did not reproduce` or `not a bug`, always with the command or test that showed it: the manager audits what you dismiss.
+   - Fold the fixes into the commits they belong to.
+   - Never review the same code twice: if the file already names a reviewed head (after a restart, for example), review only `<reviewed-sha>..HEAD`, and skip the review when nothing changed since.
    Then a fresh build of the tests at the committed HEAD, and a release-configuration build.
 6. Report with `hc send {{MANAGER}} "DONE <id>: report at <path>"`.
    The report lists: commits, what was built, tests run and results, proof paths, decisions you made, open questions, and what slowed you down.
 7. Stay idle afterwards: the manager may send review findings.
    Reproduce each finding first; one that does not reproduce gets no code.
+   Once the fixes are in, review only the fixes: `/code-review <level> <head-the-findings-were-about>..HEAD`, logged in the self-review file like the first review.
 
 If a decision is genuinely {{USER}}'s, pick the option most aligned with VISION.md, list it under "Open questions" in your report, and continue.
 If stuck, `hc send {{MANAGER}} "STUCK <id>: <blocker>"`.
