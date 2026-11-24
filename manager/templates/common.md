@@ -28,6 +28,7 @@ Report to it with `hc send {{MANAGER}} "<message>"`.
 {{TRAILERS}}
 4. Test (see below), then record the proof.
 5. Self-review before DONE, once your last chunk is committed and passes: `/code-review <level> <base>...HEAD`, with the level and base from your brief, and no `--fix`.
+   - `<base>` is the local `main` (or the merge base your brief names), never `origin/main`, which can be stale and pull other agents' merged code into your review; change only files in your own diff.
    - First write every finding to the self-review file in your brief, with the head it reviewed (`git rev-parse HEAD`), before you change any code.
    - Then reproduce each one. Mark it `fixed`, `did not reproduce` or `not a bug`, always with the command or test that showed it: the manager audits what you dismiss.
    - Fold the fixes into the commits they belong to.
