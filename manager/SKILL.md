@@ -33,10 +33,10 @@ Load the `herdr` skill first and follow its ground rules.
    - Auto mode only. Never `--dangerously-skip-permissions`: it opens a warning dialog and the agent sits there.
    - After a rejected `hc run`, check `hc ls` for a half-started terminal and remove it.
 2. **Plan.** The agent writes a plan to `$S/<id>-plan.md` and sends its path.
-   Read it: is it the simplest design, does it follow VISION and the ADRs, is it one commit per step, is it 2-3 items at most (split bigger ones).
+   Read it: is it the simplest design, does it follow VISION and the ADRs, does it list its commits as logical chunks, is it 2-3 items at most (split bigger ones).
    Reply with "go" or corrections.
-3. **Build.** The agent implements, tests, records proof and commits incrementally.
-   If an agent has been working about 45 minutes with nothing committed, nudge it.
+3. **Build.** The agent implements, tests and records proof, committing each logical chunk as soon as it passes, so the user can watch the work land in `git log`.
+   Check its `git log` on every wake-up: a chunk that grew into one big uncommitted change gets a nudge to commit, and about 45 minutes with nothing committed always does.
 4. **Reviews.** As soon as the code is committed, start both reviews in parallel with the agent's remaining tests, never after them:
    `MANAGER_DIR=$S ~/.claude/skills/manager/scripts/review.sh <id> "<title>" <base> <head> "<intended behavior>" [worktree]`
    - A fresh Opus agent writes findings to `$S/<id>-review-opus.md`.
@@ -88,7 +88,7 @@ Every wake-up: read the `<hc from>` message or `hc get` the agent that changed.
 These came from real runs; keep them in every brief (most are already in `templates/common.md`).
 - The simulator is the bottleneck, not reviews: logic in unit tests, UI test runs narrowed to the affected classes, proof recorded once from a committed test.
 - A failure called "environmental" gets one rerun on the original commit on a fresh simulator before it is believed.
-- Agents hold work uncommitted until the end unless told to commit each step.
+- Agents hold work uncommitted until the end, or squash planned steps into one commit, unless told to commit each logical chunk.
 - Agents only build Debug unless told to build Release before DONE.
 - Agents "recreate" files they did not find; they must search the repo (`git ls-files | grep`) first.
 - Codex can auto-update on launch and exit; `review.sh` relaunches it once.

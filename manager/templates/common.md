@@ -18,7 +18,11 @@ Report to it with `hc send {{MANAGER}} "<message>"`.
 
 1. Write a plan to the plan path in your brief, send the manager its path, then wait for "go" unless your brief says to continue.
 2. Implement the simplest design that does the job well.
-3. Commit each independent step as soon as it passes; never hold everything to the end.
+3. Commit incrementally, in logical chunks, so {{USER}} can follow your work in `git log` while you go.
+   - Your plan lists the commits you intend, one per logical step (for example: model and its tests, then the component, then the screen wiring, then docs).
+   - Each commit is one coherent change that builds and passes its tests, with a message that says what it does and why.
+   - Commit each chunk as soon as it passes; never hold work uncommitted to the end, and never squash planned steps into one big commit.
+   - Review fixes are commits too: one per finding or per group of related findings.
    Conventional commit prefixes; end every message with:
 {{TRAILERS}}
 4. Test (see below), then record the proof.
