@@ -21,6 +21,8 @@ template="$(cd "$(dirname "$0")/.." && pwd)/templates/review-brief.md"
 
 git -C "$repo" rev-parse --verify -q "$base^{commit}" >/dev/null || { echo "unknown base $base in $repo" >&2; exit 1; }
 git -C "$repo" rev-parse --verify -q "$head^{commit}" >/dev/null || { echo "unknown head $head in $repo" >&2; exit 1; }
+# Review only what the branch adds: an unrebased branch diffed against a newer main would show main's changes reversed.
+base=$(git -C "$repo" merge-base "$base" "$head")
 
 # Values go through the environment, so a | or & in the intent cannot break the substitution.
 render() {
