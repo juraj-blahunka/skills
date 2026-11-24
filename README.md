@@ -15,6 +15,7 @@ Set `CLAUDE_SKILLS_DIR` to install somewhere else.
 
 | Skill | Purpose |
 |---|---|
+| `ask-neon` | Ask Gemini 4 Neon through OpenRouter, capped at USD 0.05 a call |
 | `create-image` | Generate or edit an image through OpenRouter, FLUX 3 Klein at about 2 MP by default |
 | `focus` | Do only the one task asked, with the smallest change; manual only (`/focus`) |
 | `gpt-review` | Independent GPT code review, returned verbatim |
