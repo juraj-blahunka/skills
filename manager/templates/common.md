@@ -17,7 +17,9 @@ Report to it with `hc send {{MANAGER}} "<message>"`.
 ## How you work
 
 1. Write a plan to the plan path in your brief, send the manager its path, then wait for "go" unless your brief says to continue.
+   For each change, the plan names the spec rule it serves, whether the framework or platform already does it, any state or timing it adds and why, and which platform behavior it relies on and where you saw it.
 2. Implement the simplest design that does the job well.
+   Stay inside your brief's boundary: when one of its stop-and-ask triggers fires, send `hc send {{MANAGER}} "ASK <id>: <question, options, recommendation>"` and wait; never build your way past it, and never take on new scope from a passing observation.
 3. Commit incrementally, in logical chunks, so {{USER}} can follow your work in `git log` while you go.
    - Your plan lists the commits you intend, one per logical step (for example: model and its tests, then the component, then the screen wiring, then docs).
    - Each commit is one coherent change that builds and passes its tests, with a message that says what it does and why.
