@@ -22,8 +22,12 @@ The answer goes to stdout; the cap, the token counts and the real cost go to std
 - At USD 15 per million output tokens, 0.05 buys about 3,000 output tokens: enough for about 100 short one-line items or a page of prose.
   Ask for terse output (one line per item) so the answer fits; the script says when the answer was cut off at the cap.
 - Reasoning tokens are billed as output and come out of the same budget as the answer.
-  At `--effort low`, a 100-item list spent 2,228 of 3,229 tokens on reasoning and was cut off at item 74.
-  Keep `--effort minimal` (the default) for lists and brainstorming; use `low` or higher only for questions that need real thinking, with a higher `--cap` after telling the user the new figure.
+- Neon always reasons.
+  `--effort none` fails with HTTP 400 ("Reasoning is mandatory"), and a reasoning token budget is ignored.
+  `minimal` (the default) is the lowest setting and still reasons: about 300 tokens for a five-word answer, and 1,348 of 1,853 output tokens on a 100-item list.
+  At `--effort low`, the same 100-item list spent 2,228 of 3,229 tokens on reasoning and was cut off at item 74.
+  Keep `minimal` for lists and brainstorming; use `low` or higher only for questions that need real thinking, with a higher `--cap` after telling the user the new figure.
+- The script refuses a cap that leaves fewer than 600 output tokens, since reasoning alone can use about 300.
 - Never raise the cap above USD 0.05 without the user's go.
 
 ## Prompting

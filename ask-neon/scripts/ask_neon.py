@@ -27,7 +27,7 @@ MODEL = "google/gemini-4-neon"
 DEFAULT_CAP = 0.05
 CHARS_PER_TOKEN = 3.0  # conservative: real English text is closer to 4, so the estimate runs high
 OVERHEAD_TOKENS = 64  # chat template and role markers
-MIN_OUTPUT_TOKENS = 256
+MIN_OUTPUT_TOKENS = 600  # Neon spends about 300 reasoning tokens even on a one-line answer at minimal effort
 SKILL_DIR = Path(__file__).resolve().parent.parent
 ENV_FILE = SKILL_DIR / ".env"
 
@@ -78,7 +78,8 @@ def main():
     ap.add_argument("--system", help="optional system message")
     ap.add_argument("--cap", type=float, default=DEFAULT_CAP, help=f"max USD for this call (default {DEFAULT_CAP})")
     ap.add_argument("--effort", default="minimal", choices=["none", "minimal", "low", "medium", "high"],
-                    help="reasoning effort (default minimal); reasoning tokens are billed as output and count toward the cap")
+                    help="reasoning effort (default minimal); reasoning tokens are billed as output and count toward "
+                         "the cap. Neon cannot turn reasoning off: 'none' is passed through and Neon rejects it")
     ap.add_argument("--temperature", type=float, help="sampling temperature, for example 1.3 for wild brainstorming")
     ap.add_argument("--model", default=MODEL, help=f"OpenRouter model id (default {MODEL})")
     ap.add_argument("--save", help="write the request, answer and cost to this JSON file")
@@ -110,9 +111,7 @@ def main():
     messages = ([{"role": "system", "content": args.system}] if args.system else []) + [
         {"role": "user", "content": prompt}]
     body = {"model": args.model, "messages": messages, "max_tokens": max_tokens,
-            "usage": {"include": True}}
-    if args.effort != "none":
-        body["reasoning"] = {"effort": args.effort, "exclude": True}
+            "usage": {"include": True}, "reasoning": {"effort": args.effort, "exclude": True}}
     if args.temperature is not None:
         body["temperature"] = args.temperature
 
